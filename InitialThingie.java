@@ -5,7 +5,8 @@
 public class InitialThingie {
 
     public static int name() {
-        return 9;
+        int i = 0;
+        return 9+i;
     }
     
     public static String greet(){
