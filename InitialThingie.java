@@ -1,5 +1,6 @@
 /**
- * Initial Thingie
+ * InitialThingie
+ * hahahahahahahaha this has been taken over
  */
 public class InitialThingie {
 
