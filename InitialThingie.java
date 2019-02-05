@@ -1,5 +1,5 @@
 /**
- * InitialThingie
+ * Initial Thingie
  */
 public class InitialThingie {
 
