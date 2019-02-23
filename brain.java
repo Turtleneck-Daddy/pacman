@@ -26,7 +26,7 @@ public class brain {
 
         if (toCheck < 0 || toCheck >= ceiling){
             // do nothing
-            System.out.println(move);
+            System.out.println(move[0] + ", " + move[1]);
             System.out.println("Couldn't move, Did nothing");
         } else {
             move(position, move);
