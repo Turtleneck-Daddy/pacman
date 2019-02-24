@@ -33,7 +33,7 @@ public class brain {
         }
 
     }
-	
+	//For displaying arrays in  matrix form
 	public static void display(String display[][]){
 		for(int i =0; i< display.length;i++){
 				for (int j =0;j<display.length; j++){
