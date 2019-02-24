@@ -65,6 +65,18 @@ public class brain {
 
     // check if ghost go pacman
 
+
+    //For displaying arrays in  matrix form
+	public static void display(String display[][]){
+		for(int i =0; i< display.length;i++){
+				for (int j =0;j<display.length; j++){
+					System.out.print("| " + display[i][j]+" |");
+				}
+			System.out.println();
+        }
+		System.out.println();        
+	}
+
     public static void main(String[] args) {
         System.out.println(Arrays.deepToString(gameWorld.getCoinArr()));
         System.out.println(Arrays.deepToString(gameWorld.getMovingArr()));
@@ -73,19 +85,19 @@ public class brain {
         checkCoins();
         validateMove(ghostPosition, ghost1.getRandomMove());
 
-        System.out.println(Arrays.deepToString(gameWorld.getCoinArr()));
-        System.out.println(Arrays.deepToString(gameWorld.getMovingArr()));
+        display(gameWorld.getCoinArr());
+        display(gameWorld.getMovingArr());
         
         checkCoins();
         validateMove(ghostPosition, ghost1.getRandomMove());
 
-        System.out.println(Arrays.deepToString(gameWorld.getCoinArr()));
-        System.out.println(Arrays.deepToString(gameWorld.getMovingArr()));
+        display(gameWorld.getCoinArr());
+        display(gameWorld.getMovingArr());
         
         checkCoins();
         validateMove(ghostPosition, ghost1.getRandomMove());
 
-        System.out.println(Arrays.deepToString(gameWorld.getCoinArr()));
-        System.out.println(Arrays.deepToString(gameWorld.getMovingArr()));
+        display(gameWorld.getCoinArr());
+        display(gameWorld.getMovingArr());
     }
 }
