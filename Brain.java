@@ -3,7 +3,7 @@ import java.util.Arrays;
 /**
  * brain
  */
-public class brain {
+public class Brain {
     public static String[][] initialArray = {{" ", " ", "W", " "}, {" ", " ", "W", " "}, {" ", " ", "W", " "}, {" ", " ", " ", " "}};
     public static int width = initialArray.length;
     public static int height = initialArray[0].length;
