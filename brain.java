@@ -68,8 +68,15 @@ public class brain {
         }
     }
  
-    // check if ghost go pacman
+    // check if ghost is exactly 1 move away from pacman
+    //if the vertical distance between ghost an player is 1 and horisontal is 0 (or vice-versa) that means they are exactly 1 move apart, so game over
+    // true means you lost false means still going
+    public static boolean checkGameOver() {
+        int wDist = Math.abs(playerPosition[0] - ghostPosition[0]);
+        int hDist = Math.abs(playerPosition[1] - ghostPosition[1]);
 
+        return (wDist == 1 & hDist == 0) || (wDist == 0 & hDist == 1);
+    }
 
     //For displaying arrays in  matrix form
 	public static void display(String display[][]){
