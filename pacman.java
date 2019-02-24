@@ -3,7 +3,7 @@ import java.util.Scanner;
 /**
  * pacman
  */
-public class Pacman {
+public class pacman {
 
 	/**
 	This method takes in user input and converts it into the correct format to be used in Brain.java
@@ -25,17 +25,17 @@ public class Pacman {
 				direction[1] = 1;
 				break;
 			
-			case "r":
+			case "l":
 				direction[0] = 1;
 				direction[1] = -1;
 				break;
 			
-			case "l":
+			case "r":
 				direction[0] = 1;
 				direction[1] = 1;
 				break;
 		}
-		
+		keyboard.close();
 		return direction;
 		
 		
