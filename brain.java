@@ -62,7 +62,7 @@ public class brain {
             System.out.println("Collected!");
         }
     }
-
+ 
     // check if ghost go pacman
 
 
@@ -78,8 +78,8 @@ public class brain {
 	}
 
     public static void main(String[] args) {
-        System.out.println(Arrays.deepToString(gameWorld.getCoinArr()));
-        System.out.println(Arrays.deepToString(gameWorld.getMovingArr()));
+        display(gameWorld.getCoinArr());
+        display(gameWorld.getMovingArr());
 
         // testing the move and validate move methods
         checkCoins();
