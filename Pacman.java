@@ -1,11 +1,13 @@
 import java.util.Scanner;
 
-
 /**
  * pacman
  */
 public class Pacman {
 
+	/**
+	This method takes in user input and converts it into the correct format to be used in Brain.java
+	*/
     public static int[] move(){
 		Scanner keyboard = new Scanner(System.in);
 		
