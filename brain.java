@@ -33,6 +33,15 @@ public class brain {
         }
 
     }
+	
+	public static void display(String display[][]){
+		for(int i =0; i< display.length;i++){
+				for (int j =0;j<display.length; j++){
+					System.out.print(display[i][j]+" ");
+				}
+				System.out.println();
+		}
+	}
 
     // move
     public static void move(int[] position, int[] move) {
@@ -48,44 +57,57 @@ public class brain {
     }
 
     // check if pacman got coin/powerup
-    public static void checkCoins() {
-        String[][] coins = gameWorld.getCoinArr();
-        if (coins[playerPosition[0]][playerPosition[1]] != null){
-            if (coins[playerPosition[0]][playerPosition[1]] == "C") {
-                score += 100;
-            } else if (coins[playerPosition[0]][playerPosition[1]] == "P"){
-                score += 250;
-            }
-            String[][] newCoins = gameWorld.copyArr(coins);
-            newCoins[playerPosition[0]][playerPosition[1]] = null;
-            gameWorld.setCoinArr(newCoins);
-            System.out.println("Collected!");
-        }
-    }
 
     // check if ghost go pacman
 
     public static void main(String[] args) {
-        System.out.println(Arrays.deepToString(gameWorld.getCoinArr()));
-        System.out.println(Arrays.deepToString(gameWorld.getMovingArr()));
+		
+		System.out.println("COIN and POWER PELLET.");
+		display(gameWorld.getCoinArr());
+		System.out.println();
+		System.out.println("PLAYER and GHOST.");
+		display(gameWorld.getMovingArr());
+		System.out.println();
+	
+		//System.out.println(Arrays.deepToString(gameWorld.getCoinArr()));
+		//System.out.println(Arrays.deepToString(gameWorld.getMovingArr()));
 
-        // testing the move and validate move methods
-        checkCoins();
-        validateMove(ghostPosition, ghost1.getRandomMove());
+// testing the move and validate move methods
 
-        System.out.println(Arrays.deepToString(gameWorld.getCoinArr()));
-        System.out.println(Arrays.deepToString(gameWorld.getMovingArr()));
-        
-        checkCoins();
-        validateMove(ghostPosition, ghost1.getRandomMove());
+		validateMove(ghostPosition, ghost1.getRandomMove());
+		System.out.println("COIN and POWER PELLET.");
+		display(gameWorld.getCoinArr());
+		System.out.println();
+		System.out.println("PLAYER and GHOST.");
+		display(gameWorld.getMovingArr());
+		System.out.println();
+		
+		//System.out.println(Arrays.deepToString(gameWorld.getCoinArr()));
+		//System.out.println(Arrays.deepToString(gameWorld.getMovingArr()));
 
-        System.out.println(Arrays.deepToString(gameWorld.getCoinArr()));
-        System.out.println(Arrays.deepToString(gameWorld.getMovingArr()));
-        
-        checkCoins();
-        validateMove(ghostPosition, ghost1.getRandomMove());
+		validateMove(ghostPosition, ghost1.getRandomMove());
+		System.out.println("COIN and POWER PELLET.");
+		display(gameWorld.getCoinArr());
+		System.out.println();
+		System.out.println("PLAYER and GHOST.");
+		display(gameWorld.getMovingArr());
+		System.out.println();
+		
+		//System.out.println(Arrays.deepToString(gameWorld.getCoinArr()));
+		//System.out.println(Arrays.deepToString(gameWorld.getMovingArr()));
 
-        System.out.println(Arrays.deepToString(gameWorld.getCoinArr()));
-        System.out.println(Arrays.deepToString(gameWorld.getMovingArr()));
+		validateMove(ghostPosition, ghost1.getRandomMove());
+		System.out.println("COIN and POWER PELLET.");
+		display(gameWorld.getCoinArr());
+		System.out.println();
+		System.out.println("PLAYER and GHOST.");
+		display(gameWorld.getMovingArr());
+		System.out.println();
+		
+		//System.out.println(Arrays.deepToString(gameWorld.getCoinArr()));
+		//System.out.println(Arrays.deepToString(gameWorld.getMovingArr()));
+		
+			
+		
     }
 }
