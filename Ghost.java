@@ -2,7 +2,7 @@ import java.util.Random;
 /**
  * ghost
  */
-public class ghost {
+public class Ghost {
 
     private static final Random RANDOM = new Random();
 
