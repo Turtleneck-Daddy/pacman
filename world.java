@@ -68,7 +68,7 @@ public class world {
         while (coinsPlaced < coinsToPlace) {
             for (int w = 0; w < this.width; w++) {
                 for (int h = 0; h < this.height; h++) {
-                    if (coinArr[w][h] == null) {
+                    if (coinArr[w][h] == " ") {
                         if (RANDOM.nextDouble() > 0.8) {
                             coinArr[w][h] = "C";
                             coinsPlaced ++;
@@ -88,7 +88,7 @@ public class world {
             int w = RANDOM.nextInt(this.width);
             int h = RANDOM.nextInt(this.height);
 
-            if (coinArr[w][h] == null) {
+            if (coinArr[w][h] == " ") {
                 coinArr[w][h] = "O";
                 powerupsPlaced ++;
             }
@@ -96,20 +96,16 @@ public class world {
     }
 
 
-    public world(int width, int height, int[] playerPos, int[] ghostPos) {
-        if (width < 2) this.width = 2;
-        if (height < 2) this.height = 2;        
-        this.width = width;
-        this.height = height;
-        String[][] m = new String[this.width][this.height];
+    public world(String[][] arr, int[] playerPos, int[] ghostPos) {       
+        this.width = arr.length;
+        this.height = arr[0].length;
+        String[][] m = copyArr(arr);
         m[playerPos[0]][playerPos[1]] = "P";
         m[ghostPos[0]][ghostPos[1]] = "G";
         setMovingArr(m);
-        setCoinArr(new String[this.width][this.height]);
+        setCoinArr(copyArr(arr));
 
         placeCoins();
         placePowerup();
-        // populate coinArray
-        // pick starting position for player and ghost/ghosts
     }
 }

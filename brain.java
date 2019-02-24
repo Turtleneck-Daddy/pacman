@@ -4,12 +4,13 @@ import java.util.Arrays;
  * brain
  */
 public class brain {
-    public static int width = 4;
-    public static int height = 4;
+    public static String[][] initialArray = {{" ", " ", "W", " "}, {" ", " ", "W", " "}, {" ", " ", "W", " "}, {" ", " ", " ", " "}};
+    public static int width = initialArray.length;
+    public static int height = initialArray[0].length;
     public static int[] playerPosition = {0, 0};
     public static int[] ghostPosition = {width-1, height-1};
     public static ghost ghost1 = new ghost();
-    public static world gameWorld = new world(width, height, playerPosition, ghostPosition);
+    public static world gameWorld = new world(initialArray, playerPosition, ghostPosition);
     
     // score
     public static int score = 0;
@@ -18,13 +19,17 @@ public class brain {
     public static void validateMove(int[] position, int[] move) {
         int toCheck = position[move[0]] + move[1];
         int ceiling;
+        int w = position[0];
+        int h = position[1];
         if (move[0] == 0){
             ceiling = width;
+            w += move[1];
         } else {
             ceiling = height;
+            h += move[1];
         }
 
-        if (toCheck < 0 || toCheck >= ceiling){
+        if (toCheck < 0 || toCheck >= ceiling || gameWorld.getCoinArr()[w][h] == "W"){
             // do nothing
             System.out.println(move[0] + ", " + move[1]);
             System.out.println("Couldn't move, Did nothing");
@@ -39,7 +44,7 @@ public class brain {
         String[][] newArr = gameWorld.copyArr(gameWorld.getMovingArr());
         String character = newArr[position[0]][position[1]];
 
-        newArr[position[0]][position[1]] = null;
+        newArr[position[0]][position[1]] = " ";
         position[move[0]] = position[move[0]] + move[1];
 
         newArr[position[0]][position[1]] = character;
@@ -50,14 +55,14 @@ public class brain {
     // check if pacman got coin/powerup
     public static void checkCoins() {
         String[][] coins = gameWorld.getCoinArr();
-        if (coins[playerPosition[0]][playerPosition[1]] != null){
+        if (coins[playerPosition[0]][playerPosition[1]] != " "){
             if (coins[playerPosition[0]][playerPosition[1]] == "C") {
                 score += 100;
             } else if (coins[playerPosition[0]][playerPosition[1]] == "P"){
                 score += 250;
             }
             String[][] newCoins = gameWorld.copyArr(coins);
-            newCoins[playerPosition[0]][playerPosition[1]] = null;
+            newCoins[playerPosition[0]][playerPosition[1]] = " ";
             gameWorld.setCoinArr(newCoins);
             System.out.println("Collected!");
         }
@@ -69,10 +74,12 @@ public class brain {
     //For displaying arrays in  matrix form
 	public static void display(String display[][]){
 		for(int i =0; i< display.length;i++){
+            System.out.print("| ");
 				for (int j =0;j<display.length; j++){
-					System.out.print("| " + display[i][j]+" |");
-				}
-			System.out.println();
+					System.out.print(display[i][j]+" ");
+                }
+            System.out.print("|");
+            System.out.println();
         }
 		System.out.println();        
 	}
