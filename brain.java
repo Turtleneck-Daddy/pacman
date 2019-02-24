@@ -48,6 +48,20 @@ public class brain {
     }
 
     // check if pacman got coin/powerup
+    public static void checkCoins() {
+        String[][] coins = gameWorld.getCoinArr();
+        if (coins[playerPosition[0]][playerPosition[1]] != null){
+            if (coins[playerPosition[0]][playerPosition[1]] == "C") {
+                score += 100;
+            } else if (coins[playerPosition[0]][playerPosition[1]] == "P"){
+                score += 250;
+            }
+            String[][] newCoins = gameWorld.copyArr(coins);
+            newCoins[playerPosition[0]][playerPosition[1]] = null;
+            gameWorld.setCoinArr(newCoins);
+            System.out.println("Collected!");
+        }
+    }
 
     // check if ghost go pacman
 
@@ -56,17 +70,19 @@ public class brain {
         System.out.println(Arrays.deepToString(gameWorld.getMovingArr()));
 
         // testing the move and validate move methods
-
+        checkCoins();
         validateMove(ghostPosition, ghost1.getRandomMove());
 
         System.out.println(Arrays.deepToString(gameWorld.getCoinArr()));
         System.out.println(Arrays.deepToString(gameWorld.getMovingArr()));
-
+        
+        checkCoins();
         validateMove(ghostPosition, ghost1.getRandomMove());
 
         System.out.println(Arrays.deepToString(gameWorld.getCoinArr()));
         System.out.println(Arrays.deepToString(gameWorld.getMovingArr()));
-
+        
+        checkCoins();
         validateMove(ghostPosition, ghost1.getRandomMove());
 
         System.out.println(Arrays.deepToString(gameWorld.getCoinArr()));
