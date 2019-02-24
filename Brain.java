@@ -9,8 +9,8 @@ public class Brain {
     public static int height = initialArray[0].length;
     public static int[] playerPosition = {0, 0};
     public static int[] ghostPosition = {width-1, height-1};
-    public static ghost ghost1 = new ghost();
-    public static world gameWorld = new world(initialArray, playerPosition, ghostPosition);
+    public static Ghost ghost1 = new Ghost();
+    public static World gameWorld = new World(initialArray, playerPosition, ghostPosition);
     
     // score
     public static int score = 0;
