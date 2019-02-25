@@ -35,8 +35,8 @@ public class Pacman {
 				direction[1] = 1;
 				break;
 		}
-		keyboard.close();
-		return direction;
+
+        return direction;
 		
 		
 	}

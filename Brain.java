@@ -9,6 +9,7 @@ public class Brain {
     public static int height = initialArray[0].length;
     public static int[] playerPosition = {0, 0};
     public static int[] ghostPosition = {width-1, height-1};
+    public static Pacman player = new Pacman();
     public static Ghost ghost1 = new Ghost();
     public static World gameWorld = new World(initialArray, playerPosition, ghostPosition);
     
@@ -92,25 +93,17 @@ public class Brain {
 	}
 
     public static void main(String[] args) {
-        display(gameWorld.getCoinArr());
-        display(gameWorld.getMovingArr());
+        // score += 150;
+        while (score < 250 && !checkGameOver()) {
+            checkCoins();
+            System.out.println(score);
+            display(gameWorld.getCoinArr());
+            display(gameWorld.getMovingArr());
 
-        // testing the move and validate move methods
-        checkCoins();
-        validateMove(ghostPosition, ghost1.getRandomMove());
-
-        display(gameWorld.getCoinArr());
-        display(gameWorld.getMovingArr());
-        
-        checkCoins();
-        validateMove(ghostPosition, ghost1.getRandomMove());
-
-        display(gameWorld.getCoinArr());
-        display(gameWorld.getMovingArr());
-        
-        checkCoins();
-        validateMove(ghostPosition, ghost1.getRandomMove());
-
+            validateMove(playerPosition, player.move());
+            validateMove(ghostPosition, ghost1.getRandomMove());
+        }
+       
         display(gameWorld.getCoinArr());
         display(gameWorld.getMovingArr());
     }
