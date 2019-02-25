@@ -70,7 +70,7 @@ public class Brain {
     }
  
     // check if ghost is exactly 1 move away from pacman
-    //if the vertical distance between ghost an player is 1 and horisontal is 0 (or vice-versa) that means they are exactly 1 move apart, so game over
+    // if the vertical distance between ghost an player is 1 and horisontal is 0 (or vice-versa) that means they are exactly 1 move apart, so game over
     // true means you lost false means still going
     public static boolean checkGameOver() {
         int wDist = Math.abs(playerPosition[0] - ghostPosition[0]);
@@ -83,28 +83,51 @@ public class Brain {
 	public static void display(String display[][]){
 		for(int i =0; i< display.length;i++){
             System.out.print("| ");
-				for (int j =0;j<display.length; j++){
+				for (int j = 0; j < display[0].length; j++){
 					System.out.print(display[i][j]+" ");
                 }
             System.out.print("|");
             System.out.println();
         }
 		System.out.println();        
-	}
+    }
+    
+    // for displaying the actual game board
+    public static void displayBoard() {
+        String[][] moving = gameWorld.getMovingArr();
+        String[][] coins = gameWorld.getCoinArr();
+
+        for(int i =0; i< moving.length;i++){
+            System.out.print("| ");
+				for (int j =0;j < moving[0].length; j++){
+                    if (moving[i][j] != " ") {
+                        System.out.print(moving[i][j] + " ");
+                    } else if (coins[i][j] != " "){
+                        System.out.print(coins[i][j] + " ");
+                    } else {
+                        System.out.print("  ");
+                    }
+                }
+            System.out.print("|");
+            System.out.println();
+        }
+		System.out.println();
+
+    }
 
     public static void main(String[] args) {
         // score += 150;
         while (score < 250 && !checkGameOver()) {
             checkCoins();
             System.out.println(score);
-            display(gameWorld.getCoinArr());
-            display(gameWorld.getMovingArr());
+            displayBoard();
 
             validateMove(playerPosition, player.move());
             validateMove(ghostPosition, ghost1.getRandomMove());
         }
        
-        display(gameWorld.getCoinArr());
-        display(gameWorld.getMovingArr());
+        displayBoard();
+        /* display(gameWorld.getCoinArr());
+        display(gameWorld.getMovingArr()); */
     }
 }
