@@ -17,3 +17,14 @@ Download the java files in the same folder:
   World.java
   Pacman.java
 The game can be run by compiling the Brain.java class in the console and the running Brain. 
+
+## Authors
+Nikita Tripathi 
+Brendan Baker
+Mubarak Adetunji
+Soumya Kumaria
+Vi Tsang
+
+## Year
+Project started in Feburary, 2019
+Status: Not yet completed
