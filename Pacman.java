@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.Arrays;
 
 /**
  * pacman
@@ -14,28 +15,30 @@ public class Pacman {
 		String input = keyboard.nextLine();
 		int[] direction = new int[2];
 		
-		switch(input) {
-			case "u":
-				direction[0] = 0;
-				direction[1] = -1;
-				break;
-				
-			case "d":
-				direction[0] = 0;
-				direction[1] = 1;
-				break;
+	    	if(Arrays.asList("u","d","l","r").contains(input)){
 			
-			case "l":
-				direction[0] = 1;
-				direction[1] = -1;
-				break;
-			
-			case "r":
-				direction[0] = 1;
-				direction[1] = 1;
-				break;
-		}
+			switch(input) {
+				case "u":
+					direction[0] = 0;
+					direction[1] = -1;
+					break;
 
+				case "d":
+					direction[0] = 0;
+					direction[1] = 1;
+					break;
+
+				case "l":
+					direction[0] = 1;
+					direction[1] = -1;
+					break;
+
+				case "r":
+					direction[0] = 1;
+					direction[1] = 1;
+					break;
+			}
+		}
         return direction;
 		
 		
