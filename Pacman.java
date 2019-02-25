@@ -17,7 +17,7 @@ public class Pacman {
 		
 	    	if(Arrays.asList("u","d","l","r").contains(input)){
 			
-			switch(input) {
+			switch(input) { 
 				case "u":
 					direction[0] = 0;
 					direction[1] = -1;
