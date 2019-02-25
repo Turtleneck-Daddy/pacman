@@ -127,6 +127,12 @@ public class Brain {
         }
        
         displayBoard();
+    	if(score > 250){
+	    System.out.println("You Won!");
+        }
+        else if(score < 250){
+            System.out.println("You Lost!");
+    }
         /* display(gameWorld.getCoinArr());
         display(gameWorld.getMovingArr()); */
     }
