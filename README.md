@@ -1,4 +1,4 @@
-#Development of the following program is incomplete, only a usable tex-based version for Demo 1
+#Development of the following program is incomplete, only a usable text-based version for Demo 1
 
 # Pacman
 Pacman is a collection of classes that work together to make a recreation of the popular arcade game PACMAN.
@@ -16,7 +16,7 @@ Download the java files in the same folder:
   Ghost.java
   World.java
   Pacman.java
-The game can be run by compiling the Brain.java class in the console and the running Brain. 
+The game can be run by compiling the Brain.java class in the console and then running Brain. 
 
 ## Authors
 Nikita Tripathi 
