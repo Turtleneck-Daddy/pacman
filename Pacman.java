@@ -14,8 +14,6 @@ public class Pacman {
 		
 		String input = keyboard.nextLine();
 		int[] direction = new int[2];
-		
-	    	if(Arrays.asList("u","d","l","r").contains(input)){
 			
 			switch(input) { 
 				case "u":
@@ -37,8 +35,14 @@ public class Pacman {
 					direction[0] = 1;
 					direction[1] = 1;
 					break;
+
+                default:
+                    // no movement aka magnitude 0
+                    direction[0] = 0;
+                    direction[1] = 0;
+				break;
 			}
-		}
+
         return direction;
 		
 		

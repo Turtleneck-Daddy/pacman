@@ -59,7 +59,7 @@ public class Brain {
         if (coins[playerPosition[0]][playerPosition[1]] != " "){
             if (coins[playerPosition[0]][playerPosition[1]] == "C") {
                 score += 100;
-            } else if (coins[playerPosition[0]][playerPosition[1]] == "P"){
+            } else if (coins[playerPosition[0]][playerPosition[1]] == "O"){
                 score += 250;
             }
             String[][] newCoins = gameWorld.copyArr(coins);
@@ -76,7 +76,7 @@ public class Brain {
         int wDist = Math.abs(playerPosition[0] - ghostPosition[0]);
         int hDist = Math.abs(playerPosition[1] - ghostPosition[1]);
 
-        return (wDist == 1 & hDist == 0) || (wDist == 0 & hDist == 1);
+        return (wDist == 1 & hDist == 0) || (wDist == 0 & hDist == 1) || (wDist == 0 & hDist == 0);
     }
 
     //For displaying arrays in  matrix form
@@ -127,10 +127,10 @@ public class Brain {
         }
        
         displayBoard();
-    	if(score > 250){
-	    System.out.println("You Won!");
-        }
-        else if(score < 250){
+
+    	if (score > 250) {
+	        System.out.println("You Won!");
+        } else {
             System.out.println("You Lost!");
     }
         /* display(gameWorld.getCoinArr());
