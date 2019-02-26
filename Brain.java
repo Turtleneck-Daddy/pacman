@@ -32,7 +32,6 @@ public class Brain {
 
         if (toCheck < 0 || toCheck >= ceiling || gameWorld.getCoinArr()[w][h] == "W"){
             // do nothing
-            System.out.println(move[0] + ", " + move[1]);
             System.out.println("Couldn't move, Did nothing");
         } else {
             move(position, move);
@@ -118,20 +117,22 @@ public class Brain {
     public static void main(String[] args) {
         // score += 150;
         while (score < 250 && !checkGameOver()) {
-            checkCoins();
-            System.out.println(score);
             displayBoard();
-
             validateMove(playerPosition, player.move());
             validateMove(ghostPosition, ghost1.getRandomMove());
+            
+            checkCoins();
+            System.out.println("Curent Score: " + score);
+            System.out.println();
         }
-       
+        
+        System.out.println("Curent Score: " + score);
         displayBoard();
 
-    	if (score > 250) {
-	        System.out.println("You Won!");
-        } else {
+    	if (checkGameOver()) {
             System.out.println("You Lost!");
+        } else {
+	        System.out.println("You Won!");
     }
         /* display(gameWorld.getCoinArr());
         display(gameWorld.getMovingArr()); */

@@ -11,7 +11,8 @@ public class Pacman {
 	*/
     public static int[] move(){
 		Scanner keyboard = new Scanner(System.in);
-		
+        
+        System.out.print("Choose a direction (use lowercase u for up, d for down, etc... player will not move unless you use u, d, l or r): ");
 		String input = keyboard.nextLine();
 		int[] direction = new int[2];
 			
