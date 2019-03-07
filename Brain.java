@@ -4,7 +4,23 @@ import java.util.Arrays;
  * brain
  */
 public class Brain {
-    public static String[][] initialArray = {{" ", " ", "W", " "}, {" ", " ", "W", " "}, {" ", " ", "W", " "}, {" ", " ", " ", " "}};
+    public static String[][] initialArray = {
+        {" ", " ", "W", " ", " ", " ", " ", " ", "W", " ", " ", " ", " ", " ", "W", " ", " ", " ", " "},
+        {" ", " ", "W", " ", " ", " ", " ", " ", "W", " ", " ", " ", " ", " ", "W", " ", " ", " ", " "},
+        {" ", " ", "W", " ", " ", " ", " ", " ", "W", " ", " ", " ", " ", " ", "W", " ", " ", " ", " "},
+        {" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "},
+        {" ", " ", "W", "W", " ", " ", " ", " ", "W", "W", " ", " ", " ", " ", "W", "W", " ", " ", " "},
+        {" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "},
+        {" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "},
+        {" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "},
+        {" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "},
+        {" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "},
+        {" ", " ", "W", "W", " ", " ", " ", " ", "W", "W", " ", " ", " ", " ", "W", "W", " ", " ", " "},
+        {" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "},
+        {" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "},
+        {" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "},
+        {" ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " "}
+    };
     public static int width = initialArray.length;
     public static int height = initialArray[0].length;
     public static int[] playerPosition = {0, 0};
@@ -16,7 +32,7 @@ public class Brain {
     // score
     public static int score = 0;
 
-    // check for valid moves
+    // checks for valid moves 
     public static void validateMove(int[] position, int[] move) {
         int toCheck = position[move[0]] + move[1];
         int ceiling;
@@ -39,7 +55,7 @@ public class Brain {
 
     }
 
-    // move
+    // updates position of movable object
     public static void move(int[] position, int[] move) {
         String[][] newArr = gameWorld.copyArr(gameWorld.getMovingArr());
         String character = newArr[position[0]][position[1]];
@@ -68,8 +84,9 @@ public class Brain {
         }
     }
  
-    // check if ghost is exactly 1 move away from pacman
-    // if the vertical distance between ghost an player is 1 and horisontal is 0 (or vice-versa) that means they are exactly 1 move apart, so game over
+    // check if ghost is exactly 1 or 0 moves away from pacman
+    // if the vertical distance between ghost an player is 1 and horisontal
+    // is 0 (or vice-versa) that means they are exactly 1 move apart, so game over
     // true means you lost false means still going
     public static boolean checkGameOver() {
         int wDist = Math.abs(playerPosition[0] - ghostPosition[0]);
@@ -78,7 +95,7 @@ public class Brain {
         return (wDist == 1 & hDist == 0) || (wDist == 0 & hDist == 1) || (wDist == 0 & hDist == 0);
     }
 
-    //For displaying arrays in  matrix form
+    //For displaying arrays in  matrix form (good for debugging)
 	public static void display(String display[][]){
 		for(int i =0; i< display.length;i++){
             System.out.print("| ");
@@ -97,7 +114,7 @@ public class Brain {
         String[][] coins = gameWorld.getCoinArr();
 
         for(int i =0; i< moving.length;i++){
-            System.out.print("| ");
+            System.out.print("|");
 				for (int j =0;j < moving[0].length; j++){
                     if (moving[i][j] != " ") {
                         System.out.print(moving[i][j] + " ");
@@ -115,7 +132,7 @@ public class Brain {
     }
 
     public static void main(String[] args) {
-        // score += 150;
+        // Gameloop
         while (score < 250 && !checkGameOver()) {
             displayBoard();
             validateMove(playerPosition, player.move());
@@ -129,12 +146,11 @@ public class Brain {
         System.out.println("Curent Score: " + score);
         displayBoard();
 
+        // Display Win/Lose message
     	if (checkGameOver()) {
             System.out.println("You Lost!");
         } else {
 	        System.out.println("You Won!");
-    }
-        /* display(gameWorld.getCoinArr());
-        display(gameWorld.getMovingArr()); */
+        }
     }
 }
