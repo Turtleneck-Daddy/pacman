@@ -33,8 +33,8 @@ public class Ghost extends Entity{
         int[][] toCheck = {{position[0] - 1, position[1]}, {position[0] + 1, position[1]}, {position[0], position[1] - 1}, {position[0], position[1] + 1}};
         // double[] values = {0, 0, 0, 0};
         for (int i = 0; i < toCheck.length; i++) {
-            if (toCheck[i][0] >= 0 && toCheck[i][0] <= array.length-1 && toCheck[i][1] >= 0 && toCheck[i][1] <= array.length-1) {
-                if (array[toCheck[i][0]][toCheck[i][1]] > bestVal) {
+            if (toCheck[i][0] >= 0 && toCheck[i][0] <= array.length-1 && toCheck[i][1] >= 0 && toCheck[i][1] <= array[0].length-1) {
+                if (array[toCheck[i][0]][toCheck[i][1]] >= bestVal) {
                     bestVal = array[toCheck[i][0]][toCheck[i][1]];
                     decision = i;
                 }

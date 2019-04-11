@@ -72,14 +72,15 @@ public class Brain {
                 int[][] toGet = {{row - 1, col}, {row, col - 1}, {row, col + 1}, {row + 1, col}};
                 
                 for (int[] coord : toGet) {
-                    if (coord[0] >= 0 && coord[0] <= diffusedArray.length-1 && coord[1] >= 0 && coord[1] <= diffusedArray.length-1 && diffusedArray[coord[0]][coord[1]] >= 0) {
+                    if (coord[0] >= 0 && coord[0] <= diffusedArray.length-1 && coord[1] >= 0 && coord[1] <= diffusedArray[0].length-1 && diffusedArray[coord[0]][coord[1]] >= 0) {
                         //System.out.println("( "+ row + " " + col + " ) (" + coord[0] + " " + coord[1] + " ) " + result[coord[0]][coord[1]]);
                         sumOfAdjacents += diffusedArray[coord[0]][coord[1]];
                         tilesUsed++;
                     }
                 }
 
-                diffusedArray[row][col] = sumOfAdjacents/tilesUsed;
+                if (tilesUsed > 0) diffusedArray[row][col] = sumOfAdjacents/tilesUsed;
+                else diffusedArray[row][col] = sumOfAdjacents/1;
 
             }
         }
@@ -87,11 +88,29 @@ public class Brain {
     }
 
     public void diffuseFully() {
-        for (double[] row : diffusedArray) {
-            for (double item : row) {
-                if (item == 0) diffuse();
+        for (int row = 0; row < diffusedArray.length; row++) {
+            for (int col = 0; col < diffusedArray[0].length; col++) {
+                if (diffusedArray[row][col] == 0.0) {
+                    // row = 0;
+                    // col = 0;
+                    diffuse();
+                    for (double[] tiles : diffusedArray) {
+                        for (double item : tiles) {
+                            System.out.print(item + " ");
+                        }
+                        System.out.println();
+                    }
+                    System.out.println();
+            
+                }
             }
         }
+
+        // for (double[] row : diffusedArray) {
+        //     for (double item : row) {
+        //         if (item == 0.0) diffuse();
+        //     }
+        // }
     }
     
     //Getters and setters
