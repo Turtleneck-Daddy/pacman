@@ -7,21 +7,18 @@ public class Text {
         // Gameloop
         Brain gameBrain = new Brain();
         Scanner keyboard = new Scanner(System.in);
+        Pacman player = gameBrain.getPlayer();
+        Ghost ghost1 = gameBrain.getGhost();
 
-        while (gameBrain.getPlayer().getScore() < 1000 && !gameBrain.checkGameOver()) {
-            Pacman player = gameBrain.getPlayer();
-            Ghost ghost1 = gameBrain.getGhost();
-
-			gameBrain.checkLives();
+        while (!gameBrain.checkGameOver() || !gameBrain.checkWin()){
             gameBrain.displayBoard();
+            gameBrain.validateMove(player, player.move(keyboard.nextLine()));
 
-            gameBrain.validateMove(player.getPosition(), player.move(keyboard.nextLine()));
             gameBrain.checkLives();
-            
-            gameBrain.validateMove(ghost1.getPosition(), ghost1.move(""));
-            gameBrain.checkLives();
-            
+            gameBrain.validateMove(ghost1, ghost1.move("s")); 
+
             gameBrain.checkCoins();
+
             if(ghost1.getPowerStatus() && ghost1.getCounter() > 0){
                 ghost1.decreaseCounter();
             }
@@ -29,21 +26,10 @@ public class Text {
                 gameBrain.deactivatePowerUp();
                 gameBrain.getGhost().resetCounter();
             }
-
-            System.out.println("Curent Score: " + gameBrain.getPlayer().getScore());
-			System.out.println("Lives Left: " + gameBrain.getPlayer().getLives());
-            System.out.println();
-			
-        }
-        keyboard.close();
-        System.out.println("Curent Score: " + gameBrain.getPlayer().getScore());
-        gameBrain.displayBoard();
-
-        // Display Win/Lose message
-    	if (gameBrain.checkGameOver()) {
-            System.out.println("You Lost!");
-        } else {
-	        System.out.println("You Won!");
+            gameBrain.checkLives();
         }
     }
 }
+    
+    
+  
