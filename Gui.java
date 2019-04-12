@@ -29,22 +29,34 @@ public class Gui extends Application {
         
     BorderPane root = new BorderPane();
     Image image = new Image("File:Ghost.gif");
-    ImageView pic = new ImageView(image);
+    // ImageView picGhost = new ImageView(image);
+    // ImageView pic2 = new ImageView(image);
+    // ImageView pic3 = new ImageView(image);
+    // ImageView pic4 = new ImageView(image);
     GridPane gameGridPane = new GridPane();
-    HBox var = new HBox(pic);
+    // HBox var1 = new HBox(picGhost);
+    // HBox var2 = new HBox(pic2);
+    // HBox var3 = new HBox(pic3);
+    // HBox var4 = new HBox(pic4);
     Image image1 = new Image("File:Gif.gif");
-    ImageView pic1 = new ImageView(image1);
+    ImageView picPacman = new ImageView(image1);
    
-    HBox var1 = new HBox(pic1);
+    HBox varPacman = new HBox(picPacman);
     String keyPressed = "d";
     Label scoreLabel = new Label("Score: " + gameBrain.getPlayer().getScore());
     
     //creating the visual board
     public void displayBoard() {
-        pic.setFitHeight(40);
-        pic.setFitWidth(40);
-        pic1.setFitHeight(25);
-        pic1.setFitWidth(25);
+        // picGhost.setFitHeight(40);
+        // picGhost.setFitWidth(40);
+        // pic2.setFitHeight(40);
+        // pic2.setFitWidth(40);
+        // pic3.setFitHeight(40);
+        // pic3.setFitWidth(40);
+        // pic4.setFitHeight(40);
+        // pic4.setFitWidth(40);
+        picPacman.setFitHeight(25);
+        picPacman.setFitWidth(25);
         
         gameGridPane.setGridLinesVisible(true);
         for (int i = 0; i < 10; i++) {
@@ -59,25 +71,29 @@ public class Gui extends Application {
 
             int[] pacmanPos = gameBrain.getPlayer().getPosition();
 
-            gameGridPane.add(pic1,pacmanPos[1], pacmanPos[0]);
+            gameGridPane.add(picPacman,pacmanPos[1], pacmanPos[0]);
 
             if(keyPressed =="a"){
-                pic1.setRotate(180.00);
+                picPacman.setRotate(180.00);
             }
             else if(keyPressed == "s"){
-                pic1.setRotate(90.00);
+                picPacman.setRotate(90.00);
             }
             else if(keyPressed == "w"){
-                pic1.setRotate(270.00);
+                picPacman.setRotate(270.00);
             }
             else if(keyPressed == "d"){
-                pic1.setRotate(0.00);
+                picPacman.setRotate(0.00);
             }
 
             for (Ghost ghost : gameBrain.getGhostArray()) {
                 int[] pos = ghost.getPosition();
                 if (! ghost.getPowerStatus()) {
-                    gameGridPane.add(pic,pos[1],pos[0]);
+                    ImageView picGhost = new ImageView(image);
+                    picGhost.setFitHeight(40);
+                    picGhost.setFitWidth(40);
+
+                    gameGridPane.add(picGhost,pos[1],pos[0]);
                 } else {
                     gameGridPane.add(new Rectangle(5, 10,Color.BLACK),pos[1],pos[0]);
                 }
@@ -89,13 +105,13 @@ public class Gui extends Application {
                 for (int j = 0; j < gameBrain.getDisplayArr()[0].length; j++) {
 
                     if(gameBrain.getDisplayArr()[i][j] == "C"){
-                        gameGridPane.add(new Circle(10, Color.YELLOW),j,i);
+                        gameGridPane.add(new Circle(7, Color.ORANGE),j,i);
                     }
                     else if(gameBrain.getDisplayArr()[i][j] == "W"){
-                        gameGridPane.add(new Rectangle(5, 30,Color.GRAY),j,i);
+                        gameGridPane.add(new Rectangle(30, 30,Color.GRAY),j,i);
                     }
                     else if(gameBrain.getDisplayArr()[i][j] == "O"){
-                        gameGridPane.add(new Circle (10,Color.BLUE),j,i);
+                        gameGridPane.add(new Circle (7,Color.BLUE),j,i);
                     }
                     
                 }
@@ -119,11 +135,10 @@ public class Gui extends Application {
         gameGridPane.setHgap(0);
 	    gameGridPane.setVgap(0); 
         
-        Scene gameScreen = new Scene(root, 400, 300);
+        Scene gameScreen = new Scene(root, 650, 650);
 
 		//Event handler
         gameScreen.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
-
 			if(key.getCode() == javafx.scene.input.KeyCode.A ) {
                 // var.setCenterX(var.getCenterX() + 10);
                 keyPressed = "a";
@@ -164,28 +179,27 @@ public class Gui extends Application {
                 
                 
                     if (now - lastUpdate >= 500000000l ) {
-                        
-                        if(gameBrain.checkGameOver()) {
-                            root.getChildren().remove(gameGridPane);
-                            root.setCenter(youLost);
-                            youLost.setFont(Font.font("Verdana" , 50));
-                            youLost.setTextFill(Color.RED);
-                            }
 
                         gameBrain.validateMove(player, player.move(keyPressed));
 
                         gameBrain.checkLives();
-                        gameBrain.validateMove(ghost1, ghost1.move("s")); 
-
+                        
                         gameBrain.checkCoins();
+                        
+                        for (Ghost ghost : gameBrain.getGhostArray()) {
+                            gameBrain.validateMove(ghost, ghost.move("s")); 
+                            
+                            
+                            if(ghost.getPowerStatus() && ghost.getCounter() > 0){
+                                ghost.decreaseCounter();
+                            }
+                            else{
+                                gameBrain.deactivatePowerUp(ghost);
+                                gameBrain.getGhost().resetCounter();
+                            }
+                        }
 
-                        if(ghost1.getPowerStatus() && ghost1.getCounter() > 0){
-                            ghost1.decreaseCounter();
-                        }
-                        else{
-                            gameBrain.deactivatePowerUp();
-                            gameBrain.getGhost().resetCounter();
-                        }
+
                         gameBrain.checkLives();
                         //System.out.println(keyPressed);
                         lastUpdate = now;
