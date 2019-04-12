@@ -4,12 +4,9 @@ import java.util.Arrays;
 
 
 /**
- * Logic class Brain. Takes classes Ghost, Pacman and World together and runs the gameplay.
- * Is used to run Text and Gui versions.
+ * brain
  */
-
 public class Brain {
-
     public String[][] initialArray = {
         {"C", "C", "C", "C", "C", "C", "C", "C", "W", "C", "C", "C", "C", "C", "C", "C", "C"},
 
@@ -96,15 +93,12 @@ public class Brain {
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},        
 
     };
-
-    //Instance Variables
     public int amountOfCoins = 0;
     private final int[] initialPlayerPosition = {14, 8};
     private final int[] initialGhost1Position = {6, 8}; 
     private final int[] initialGhost2Position = {8, 7}; 
     private final int[] initialGhost3Position = {8, 8}; 
     private final int[] initialGhost4Position = {8, 9}; 
-
     private Pacman player = new Pacman(initialPlayerPosition);
     private Ghost ghost1 = new Ghost(initialGhost1Position, diffusedArray);
     private Ghost ghost2 = new Ghost(initialGhost2Position, diffusedArray);
@@ -112,90 +106,6 @@ public class Brain {
     private Ghost ghost4 = new Ghost(initialGhost4Position, diffusedArray);
     private Ghost[] ghostArray = {ghost1, ghost2, ghost3, ghost4};
     private World gameWorld = new World(initialArray, player.getPosition(), ghost1.getPosition());
-    
-    //Getters
-
-    /**
-     * @return the width of array
-     */
-    public int getWidth(){
-        return width;
-    }
-
-    /**
-     * @return the height of the array
-     */
-    public int getHeight(){
-        return height;
-    }
-
-    /**
-     * @return the player of type Pacman
-     */
-    public Pacman getPlayer(){
-        return player;
-    }
-
-    /**
-     * @param number
-     * @return the specified ghost of type Ghost
-     */
-    public Ghost getGhost(int number){
-        switch(number){
-            case 1:
-                return ghost1;
-            case 2:
-                return ghost2;
-            case 3:
-                return ghost3;
-        }
-        return ghost4;
-    }
-
-    /**
-     * @return the gameworld
-     */
-    public World getGameWorld(){
-        return gameWorld;
-    }
-
-    /**
-     * @return the amount of coins remaining on map
-     */
-    public int getAmountOfCoins(){
-        return amountOfCoins;
-    }
-
-    /**
-     * @return initial player position
-     */
-    public int[] getInitialPlayerPosition(){
-        return new int[] {initialPlayerPosition[0], initialPlayerPosition[1]};
-    }
-
-    /**
-     * @param number
-     * @return the initial position of ghost specified by number
-     */
-    public int[] getInitialGhostPosition(int number){
-        switch(number){
-            case 1:
-                return new int[] {initialGhost1Position[0], initialGhost1Position[1]};
-            case 2:
-                return new int[] {initialGhost2Position[0], initialGhost2Position[1]};
-            case 3:
-            return new int[] {initialGhost3Position[0], initialGhost3Position[1]};
-        }
-        return new int[] {initialGhost4Position[0], initialGhost4Position[1]};
-    }
-
-    /**
-     * @return the ghostArray
-     */
-    public Ghost[] getGhostArray() {
-        return ghostArray;
-    }
-
 
     public void updateDiffArr() {
         for (int row = 0; row < diffusedArray.length; row++) {
@@ -224,6 +134,7 @@ public class Brain {
                 
                 for (int[] coord : toGet) {
                     if (coord[0] >= 0 && coord[0] <= diffusedArray.length-1 && coord[1] >= 0 && coord[1] <= diffusedArray[0].length-1 && diffusedArray[coord[0]][coord[1]] >= 0) {
+                        //System.out.println("( "+ row + " " + col + " ) (" + coord[0] + " " + coord[1] + " ) " + result[coord[0]][coord[1]]);
                         sumOfAdjacents += diffusedArray[coord[0]][coord[1]];
                         tilesUsed++;
                     }
@@ -241,19 +152,53 @@ public class Brain {
         for (int row = 0; row < diffusedArray.length; row++) {
             for (int col = 0; col < diffusedArray[0].length; col++) {
                 if (diffusedArray[row][col] == 0.0) {
+                    // row = 0;
+                    // col = 0;
                     diffuse();
+                    // for (double[] tiles : diffusedArray) {
+                    //     for (double item : tiles) {
+                    //         System.out.print(item + " ");
+                    //     }
+                    //     System.out.println();
+                    // }
+                    // System.out.println();
+            
                 }
             }
         }
     }
+    
+    //Getters and setters
+    public int getWidth(){
+        return width;
+    }
 
+    public int getHeight(){
+        return height;
+    }
+
+    public Pacman getPlayer(){
+        return player;
+    }
+
+    public Ghost getGhost(){
+        return ghost1;
+    }
+
+    public World getGameWorld(){
+        return gameWorld;
+    }
+
+    /**
+     * @return the ghostArray
+     */
+    public Ghost[] getGhostArray() {
+        return ghostArray;
+    }
 
    /**
-    * checks if desiered move applied to the mover is within bounds. If appropriate then the mover Entity is moved
-    * move is in the format [a,b] where a (0 or 1) that represents vertical or horizonal and b (1, or -1) represents forward or backwards
-    * @param mover
-    * @param move
-    */
+   	checks for valid moves of movable objects, moving them accordingly
+   */
     public void validateMove(Entity mover, int[] move) {
         int[] position =  mover.getPosition();
         int toCheck = position[move[0]] + move[1];
@@ -269,20 +214,22 @@ public class Brain {
         }
 
         if (toCheck < 0 || toCheck >= ceiling || gameWorld.getCoinArr()[w][h] == "W"){
+            // do nothing
             System.out.println("Couldn't move, Did nothing." + mover.getCharacter() + " Tried to move" + move[0] + " " + move[1]);
         } else {
             move(mover, move);
+            // System.out.println(initialPlayerPosition[0] + " " +  initialPlayerPosition[1]);
+            // System.out.println(initialGhostPosition[0] + " " +  initialGhostPosition[1]);
         }
 
     }
 
-    /**
-     * Updates position of movable object, mover
-     * Resets the position if ghost and pacman intersect, depending on the ghost status (edible up or not)
-     * @param mover
-     * @param move
-     */
+    // updates position of movable object
     public void move(Entity mover, int[] move) {
+		//Resets the position if they intersect, depending on the Pacmans status (powered up or not)
+		//Current parameters: Pacman gets sent to top left, ghost gets sent to inside the box
+		//BUG: can not get the GUI version to take any keyboard input until counter runs out
+		//     the game halts until the counter runs out for the power pellet
         
         int[] position = mover.getPosition();
         boolean munched = false;
@@ -296,6 +243,11 @@ public class Brain {
             }
         }
         
+		// if (player.getPosition()[0] == ghost1.getPosition()[0] && player.getPosition()[1] == ghost1.getPosition()[1]) {
+        //     System.out.println("MUNCH");
+		// 	resetPosition();
+        // }
+        
 		if (! munched) {
 			String[][] newArr = gameWorld.copyArr(gameWorld.getMovingArr());
             String character = newArr[position[0]][position[1]];
@@ -304,8 +256,10 @@ public class Brain {
             position[move[0]] = position[move[0]] + move[1]; 
             int[] newLocation = position;
 
+
             mover.setPosition(newLocation);
 
+            // this next line might be the issue
 			newArr[position[0]][position[1]] = character;
 
 			gameWorld.setMovingArr(newArr);
@@ -313,10 +267,11 @@ public class Brain {
         
         updateDiffArr();
         diffuseFully();
+        // System.out.println(ghost1.getPowerStatus() + " " + ghost1.getPosition()[0] + " " + ghost1.getPosition()[1]);
     }
 
     /**
-     * Checks if pacman obtained a power pellet or coin	and updates score accordingly
+    	Checks if pacman obtained a power pellet or coin	
     */
     public void checkCoins() {
         String[][] coins = gameWorld.getCoinArr();
@@ -347,9 +302,6 @@ public class Brain {
         
     }
 
-    /**
-     * @return true if all coins has been collected
-     */
     public boolean checkWin() {
         amountOfCoins = 0;
         for (int x= 0; x < getDisplayArr().length; x++){
@@ -370,12 +322,16 @@ public class Brain {
     }
  
 	/**
-     * Checks lives of player or ghost and resets the position if necessary
+	    Checks lives of player or ghost and resets the position if necessary
 	*/
 	public void checkLives(){
+        // boolean intersect = false;
+        // Ghost intersectedGhost;
 
         for (Ghost ghost : ghostArray) {
             if (player.getPosition()[0] == ghost.getPosition()[0] && player.getPosition()[1] == ghost.getPosition()[1]) {
+                // intersect = true;
+                // intersectedGhost = ghost;
 
                 if (player.getLives() > 0 && !ghost.getPowerStatus()) {
                     player.loseLife();
@@ -390,7 +346,7 @@ public class Brain {
 	}
 	
 	/**
-     * returns the game board to be used in displayBoard
+		returns the game board
 	*/
     public String[][] getDisplayArr() {
         String[][] moving = gameWorld.getMovingArr();
@@ -412,7 +368,7 @@ public class Brain {
     }    
 	
 	/**
-     * Allows pacman to eat the ghosts after obtaining a power pellet 
+		Allows pacman to eat the ghosts after obtaining a power pellet (only functional in the Text base version)
 	*/
 	public void activatePowerUp(){
         for (Ghost ghost : ghostArray) {
@@ -421,25 +377,26 @@ public class Brain {
 		gameWorld.setPowerUpArr();
     }
     
-    /**
-     * resets the power status of the ghost once it has been eaten
-     * @param ghost
-     */
     public void deactivatePowerUp(Ghost ghost){
 		ghost.setPowerStatus(false); 
 		gameWorld.resetFromPowerUpArr();  
     }
 	
 	/**
-     * resets movable object to initial positions in consumbed by an enemy
+		resets pacman to the first block if lives stil remain, and ghost to the inside box if consumed
 	*/
 	public void resetPosition(Ghost ghost) {
 		
         String[][] newMoveArr = gameWorld.copyArr(gameWorld.getMovingArr());
         Entity eaten;
+        // double toPlace;
+
+        // make sure to check all ghosts
 		
 		if (!ghost.getPowerStatus()){
+
             eaten = player;
+            // toplace = 1;
 		}
 		else {
             eaten = ghost;
@@ -464,17 +421,14 @@ public class Brain {
 	
  
 	/**
-     * games over when lives have run out
+		games over when lives have run out
 	*/
     public boolean checkGameOver() {
         
         return player.getLives() == 0;
     }
 
-    /**
-     * For displaying the array in matrix form
-     * @param display
-     */
+    //For displaying arrays in  matrix form (good for debugging)
 	public void display(String display[][]){
 		for(int i =0; i< display.length;i++){
             System.out.print("| ");
@@ -487,9 +441,7 @@ public class Brain {
 		System.out.println();        
     }
     
-    /**
-     * To display actual game board in text based version
-     */
+    // for displaying the actual game board
     public void displayBoard() {
         String[][] moving = gameWorld.getMovingArr();
         String[][] coins = gameWorld.getCoinArr();
