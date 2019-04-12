@@ -123,6 +123,7 @@ public class Gui extends Application {
 
 		//Event handler
         gameScreen.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
+
 			if(key.getCode() == javafx.scene.input.KeyCode.A ) {
                 // var.setCenterX(var.getCenterX() + 10);
                 keyPressed = "a";
@@ -163,6 +164,13 @@ public class Gui extends Application {
                 
                 
                     if (now - lastUpdate >= 500000000l ) {
+                        
+                        if(gameBrain.checkGameOver()) {
+                            root.getChildren().remove(gameGridPane);
+                            root.setCenter(youLost);
+                            youLost.setFont(Font.font("Verdana" , 50));
+                            youLost.setTextFill(Color.RED);
+                            }
 
                         gameBrain.validateMove(player, player.move(keyPressed));
 
