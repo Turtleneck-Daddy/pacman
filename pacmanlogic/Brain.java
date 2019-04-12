@@ -8,17 +8,43 @@ import java.util.Arrays;
  */
 public class Brain {
     public String[][] initialArray = {
-        {" ", " ", " ", " ", "W", "W", "W", " ", "W", " "},
+        {"C", "C", "C", "C", "C", "C", "C", "C", "W", "C", "C", "C", "C", "C", "C", "C", "C"},
 
-        {" ", "W", " ", " ", " ", " ", " ", " ", "W", " "},
+        {"O", "W", "W", "C", "W", "W", "W", "C", "W", "C", "W", "W", "W", "C", "W", "W", "O"},
 
-        {" ", "W", " ", "W", " ", "W", " ", " ", "W", " "},
+        {"C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C"},
 
-        {" ", "W", " ", "W", "W", "W", " ", " ", " ", " "},
+        {"C", "W", "W", "C", "W", "C", "W", "W", "W", "W", "W", "C", "W", "C", "W", "W", "C"},
 
-        {" ", "W", " ", " ", " ", " ", " ", "W", "W", " "},
+        {"C", "C", "C", "C", "W", "C", "C", "C", "W", "C", "C", "C", "W", "C", "C", "C", "C"},
 
-        {" ", " ", " ", " ", " ", " ", " ", "W", " ", " "},
+        {"W", "W", "W", "C", "W", "W", "W", " ", "W", " ", "W", "W", "W", "C", "W", "W", "W"},
+
+        {"W", "W", "W", "C", "W", " ", " ", " ", " ", " ", " ", " ", "W", "C", "W", "W", "W"},
+
+        {"W", "W", "W", "C", "W", " ", "W", " ", " ", " ", "W", " ", "W", "C", "W", "W", "W"},
+
+        {"W", "W", "W", "C", " ", " ", "W", " ", " ", " ", "W", " ", " ", "C", "W", "W", "W"},
+
+        {"W", "W", "W", "C", "W", " ", "W", "W", "W", "W", "W", " ", "W", "C", "W", "W", "W"},
+
+        {"W", "W", "W", "C", "W", " ", " ", " ", " ", " ", " ", " ", "W", "C", "W", "W", "W"},
+
+        {"W", "W", "W", "C", "W", " ", "W", "W", "W", "W", "W", " ", "W", "C", "W", "W", "W"},
+
+        {"C", "C", "C", "C", "C", "C", "C", "C", "W", "C", "C", "C", "C", "C", "C", "C", "C"},
+
+        {"C", "W", "W", "C", "W", "W", "W", "C", "W", "C", "W", "W", "W", "C", "W", "W", "C"},
+
+        {"O", "C", "W", "C", "C", "C", "C", "C", " ", "C", "C", "C", "C", "C", "W", "C", "O"},
+
+        {"W", "C", "W", "C", "W", "C", "W", "W", "W", "W", "W", "C", "W", "C", "W", "C", "W"},
+
+        {"C", "C", "C", "C", "W", "C", "C", "C", "W", "C", "C", "C", "W", "C", "C", "C", "C"},
+
+        {"C", "W", "W", "W", "W", "W", "W", "C", "W", "C", "W", "W", "W", "W", "W", "W", "C"},        
+
+        {"C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C", "C"},        
 
     };
 
@@ -28,25 +54,57 @@ public class Brain {
 
     // -1: wall -2: ghost
     public double[][] diffusedArray = {
-        {0, 0, 0, 0, -1, -1, -1, 0, -1, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0},
 
-        {0, -1, 0, 0, 0, 0, 0, 0, -1, 0},
+        {0, -1, -1, 0, -1, -1, -1, 0, -1, 0, -1, -1, -1, 0, -1, -1, 0},
 
-        {0, -1, 0, -1, 0, -1, 0, 0, -1, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 
-        {0, -1, 0, -1, -1, -1, 0, 0, 0, 0},
+        {0, -1, -1, 0, -1, 0, -1, -1, -1, -1, -1, 0, -1, 0, -1, -1, 0},
 
-        {0, -1, 0, 0, 0, 0, 0, -1, -1, 0},
+        {0, 0, 0, 0, -1, 0, 0, 0, -1, 0, 0, 0, -1, 0, 0, 0, 0},
 
-        {0, 0, 0, 0, 0, 0, 0, -1, 0, 0},
+        {-1, -1, -1, 0, -1, -1, -1, 0, -1, 0, -1, -1, -1, 0, -1, -1, -1},
+
+        {-1, -1, -1, 0, -1, 0, 0, 0, 0, 0, 0, 0, -1, 0, -1, -1, -1},
+
+        {-1, -1, -1, 0, -1, 0, -1, 0, 0, 0, -1, 0, -1, 0, -1, -1, -1},
+
+        {-1, -1, -1, 0, 0, 0, -1, 0, 0, 0, -1, 0, 0, 0, -1, -1, -1},
+
+        {-1, -1, -1, 0, -1, 0, -1, -1, -1, -1, -1, 0, -1, 0, -1, -1, -1},
+
+        {-1, -1, -1, 0, -1, 0, 0, 0, 0, 0, 0, 0, -1, 0, -1, -1, -1},
+
+        {-1, -1, -1, 0, -1, 0, -1, -1, -1, -1, -1, 0, -1, 0, -1, -1, -1},
+
+        {0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0},
+
+        {0, -1, -1, 0, -1, -1, -1, 0, -1, 0, -1, -1, -1, 0, -1, -1, 0},
+
+        {0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0},
+
+        {-1, 0, -1, 0, -1, 0, -1, -1, -1, -1, -1, 0, -1, 0, -1, 0, -1},
+
+        {0, 0, 0, 0, -1, 0, 0, 0, -1, 0, 0, 0, -1, 0, 0, 0, 0},
+
+        {0, -1, -1, -1, -1, -1, -1, 0, -1, 0, -1, -1, -1, -1, -1, -1, 0},        
+
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},        
 
     };
     public int amountOfCoins = 0;
-    private final int[] initialPlayerPosition = {0, 0};
-    private final int[] initialGhostPosition = {2, 4}; 
+    private final int[] initialPlayerPosition = {14, 8};
+    private final int[] initialGhost1Position = {6, 8}; 
+    private final int[] initialGhost2Position = {8, 7}; 
+    private final int[] initialGhost3Position = {8, 8}; 
+    private final int[] initialGhost4Position = {8, 9}; 
     private Pacman player = new Pacman(initialPlayerPosition);
-    private Ghost ghost1 = new Ghost(initialGhostPosition, diffusedArray);
-    private Ghost[] ghostArray = {ghost1};
+    private Ghost ghost1 = new Ghost(initialGhost1Position, diffusedArray);
+    private Ghost ghost2 = new Ghost(initialGhost2Position, diffusedArray);
+    private Ghost ghost3 = new Ghost(initialGhost3Position, diffusedArray);
+    private Ghost ghost4 = new Ghost(initialGhost4Position, diffusedArray);
+    private Ghost[] ghostArray = {ghost1, ghost2, ghost3, ghost4};
     private World gameWorld = new World(initialArray, player.getPosition(), ghost1.getPosition());
 
     public void updateDiffArr() {
@@ -55,8 +113,10 @@ public class Brain {
                 if (diffusedArray[row][col] == -2 || diffusedArray[row][col] == 1) diffusedArray[row][col] = 0;
             }
         }
-        diffusedArray[initialPlayerPosition[0]][initialPlayerPosition[1]] = 1;
-        diffusedArray[initialGhostPosition[0]][initialGhostPosition[1]] = -2;
+        diffusedArray[player.getPosition()[0]][player.getPosition()[1]] = 1;
+        for (Ghost ghost : ghostArray) {
+            diffusedArray[ghost.getPosition()[0]][ghost.getPosition()[1]] = -2;
+        }
     }
 
     public void diffuse() {
@@ -95,15 +155,14 @@ public class Brain {
                     // row = 0;
                     // col = 0;
                     diffuse();
-                    /** 
-                    for (double[] tiles : diffusedArray) {
-                        for (double item : tiles) {
-                            System.out.print(item + " ");
-                        }
-                        System.out.println();
-                    }
-                    System.out.println();
-                    */
+                    // for (double[] tiles : diffusedArray) {
+                    //     for (double item : tiles) {
+                    //         System.out.print(item + " ");
+                    //     }
+                    //     System.out.println();
+                    // }
+                    // System.out.println();
+            
                 }
             }
         }
@@ -159,8 +218,8 @@ public class Brain {
             System.out.println("Couldn't move, Did nothing." + mover.getCharacter() + " Tried to move" + move[0] + " " + move[1]);
         } else {
             move(mover, move);
-            System.out.println("P " + initialPlayerPosition[0] + " " +  initialPlayerPosition[1]);
-            System.out.println("G " + initialGhostPosition[0] + " " +  initialGhostPosition[1]);
+            // System.out.println(initialPlayerPosition[0] + " " +  initialPlayerPosition[1]);
+            // System.out.println(initialGhostPosition[0] + " " +  initialGhostPosition[1]);
         }
 
     }
@@ -169,6 +228,8 @@ public class Brain {
     public void move(Entity mover, int[] move) {
 		//Resets the position if they intersect, depending on the Pacmans status (powered up or not)
 		//Current parameters: Pacman gets sent to top left, ghost gets sent to inside the box
+		//BUG: can not get the GUI version to take any keyboard input until counter runs out
+		//     the game halts until the counter runs out for the power pellet
         
         int[] position = mover.getPosition();
         boolean munched = false;
@@ -181,6 +242,11 @@ public class Brain {
                 break;
             }
         }
+        
+		// if (player.getPosition()[0] == ghost1.getPosition()[0] && player.getPosition()[1] == ghost1.getPosition()[1]) {
+        //     System.out.println("MUNCH");
+		// 	resetPosition();
+        // }
         
 		if (! munched) {
 			String[][] newArr = gameWorld.copyArr(gameWorld.getMovingArr());
@@ -201,7 +267,7 @@ public class Brain {
         
         updateDiffArr();
         diffuseFully();
-        System.out.println(ghost1.getPowerStatus() + " " + ghost1.getPosition()[0] + " " + ghost1.getPosition()[1]);
+        // System.out.println(ghost1.getPowerStatus() + " " + ghost1.getPosition()[0] + " " + ghost1.getPosition()[1]);
     }
 
     /**
@@ -259,24 +325,24 @@ public class Brain {
 	    Checks lives of player or ghost and resets the position if necessary
 	*/
 	public void checkLives(){
-        boolean intersect = false;
-        Ghost intersectedGhost;
+        // boolean intersect = false;
+        // Ghost intersectedGhost;
 
         for (Ghost ghost : ghostArray) {
             if (player.getPosition()[0] == ghost.getPosition()[0] && player.getPosition()[1] == ghost.getPosition()[1]) {
-                intersect = true;
-                intersectedGhost = ghost;
+                // intersect = true;
+                // intersectedGhost = ghost;
 
-                if (player.getLives() > 0 && !intersectedGhost.getPowerStatus()) {
+                if (player.getLives() > 0 && !ghost.getPowerStatus()) {
                     player.loseLife();
                     System.out.println("You lost a life!");
                 }
-                resetPosition(intersectedGhost);
+                resetPosition(ghost);
 
                 break;
             }
         }
-        
+
 	}
 	
 	/**
@@ -305,12 +371,14 @@ public class Brain {
 		Allows pacman to eat the ghosts after obtaining a power pellet (only functional in the Text base version)
 	*/
 	public void activatePowerUp(){
-		ghost1.setPowerStatus(true); 
+        for (Ghost ghost : ghostArray) {
+            ghost.setPowerStatus(true);
+        }
 		gameWorld.setPowerUpArr();
     }
     
-    public void deactivatePowerUp(){
-		ghost1.setPowerStatus(false); 
+    public void deactivatePowerUp(Ghost ghost){
+		ghost.setPowerStatus(false); 
 		gameWorld.resetFromPowerUpArr();  
     }
 	
@@ -321,20 +389,18 @@ public class Brain {
 		
         String[][] newMoveArr = gameWorld.copyArr(gameWorld.getMovingArr());
         Entity eaten;
-        int[] spawnPosition;
+        // double toPlace;
 
         // make sure to check all ghosts
 		
 		if (!ghost.getPowerStatus()){
 
             eaten = player;
-            spawnPosition = new int[] {0,0};
-
+            // toplace = 1;
 		}
 		else {
             eaten = ghost;
             ghost.setPowerStatus(false);
-            spawnPosition = new int[] {2,4};
 			
         }
         
@@ -342,12 +408,11 @@ public class Brain {
         
         newMoveArr[eatenPosition[0]][eatenPosition[1]] = eaten.getEnemyCharacter();
         
-        if(eaten.getCharacter().equals("P")){
-            eaten.setPosition(new int[] {0,0});
+        if (eaten.getCharacter().equals("P")) {
+            eaten.setPosition(new int[] {14,8});
             newMoveArr[0][0] = eaten.getCharacter();
-        }
-        else{
-            eaten.setPosition(new int[] {2,4});
+        } else {
+            eaten.setPosition(new int[] {6,8});
 		    newMoveArr[2][4] = eaten.getCharacter();
         }
 
