@@ -1,17 +1,22 @@
-#Development of the following program is incomplete, only a usable text-based version for Demo 1
+#Development of the following program is almost complete
 
 # Pacman
 Pacman is a collection of classes that work together to make a recreation of the popular arcade game PACMAN.
 
 ## Description
-This version is only text-based and takes input from the user one turn at a time.
+The pacmanlogic package contains the logic classes
+The pacmangui package contains the Gui class to run GUI
+The pacmantext package contains the Text class to run the text based version
+The Resources folder contains the gif files for GUI
+The Testing folder contains the test classes and jar files to run the J Unit tests
 The input is expected in the following forms to indicate the direction they want the avatar to move in:
-  u for up, d for down, r for right, l for left
+  w for up, s for down, d for right and  a for left
 The goal of the user is to collect coins and power ups (which reward points) without running into the only ghost present in the game.
-The game ends once the user achieves the over 250 points or is eaten.
+Once power pellet is consumed the ghost can be eaten by the user.
+The game ends once the user eats all the coins.
 
 ## Installation
-Download the java files in the same folder:
+Download the java packages in the same folder:
   Brain.java
   Ghost.java
   World.java
