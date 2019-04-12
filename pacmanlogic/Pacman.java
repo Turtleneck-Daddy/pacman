@@ -15,6 +15,10 @@ public class Pacman extends Entity{
 	public Pacman(int[] initialPosition){
         setPosition(initialPosition);
 	}
+
+	public Pacman(){
+
+	}
 	
 	/**
 	This method takes in user input and converts it into the correct format to be used in Brain.java

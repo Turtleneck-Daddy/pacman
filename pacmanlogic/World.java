@@ -127,7 +127,7 @@ public class World {
 		setMovingArr(newGhostArr);
 	}
 		
-
+    //Constructor
     public World(String[][] arr, int[] playerPos, int[] ghostPos) {       
         this.width = arr.length;
         this.height = arr[0].length;
@@ -139,5 +139,9 @@ public class World {
 
         placeCoins();
         placePowerup();
+    }
+
+    public World(){
+        
     }
 }

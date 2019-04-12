@@ -16,6 +16,9 @@ public class Ghost extends Entity{
         setPosition(initialPosition);
         setDiffusedArray(array);
     }
+    public Ghost(){
+        
+    }
 
     @Override
     public String getCharacter() {
