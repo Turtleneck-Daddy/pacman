@@ -95,6 +95,7 @@ public class Brain {
                     // row = 0;
                     // col = 0;
                     diffuse();
+                    /** 
                     for (double[] tiles : diffusedArray) {
                         for (double item : tiles) {
                             System.out.print(item + " ");
@@ -102,7 +103,7 @@ public class Brain {
                         System.out.println();
                     }
                     System.out.println();
-            
+                    */
                 }
             }
         }
@@ -158,8 +159,8 @@ public class Brain {
             System.out.println("Couldn't move, Did nothing." + mover.getCharacter() + " Tried to move" + move[0] + " " + move[1]);
         } else {
             move(mover, move);
-            // System.out.println(initialPlayerPosition[0] + " " +  initialPlayerPosition[1]);
-            // System.out.println(initialGhostPosition[0] + " " +  initialGhostPosition[1]);
+            System.out.println("P " + initialPlayerPosition[0] + " " +  initialPlayerPosition[1]);
+            System.out.println("G " + initialGhostPosition[0] + " " +  initialGhostPosition[1]);
         }
 
     }
@@ -168,8 +169,6 @@ public class Brain {
     public void move(Entity mover, int[] move) {
 		//Resets the position if they intersect, depending on the Pacmans status (powered up or not)
 		//Current parameters: Pacman gets sent to top left, ghost gets sent to inside the box
-		//BUG: can not get the GUI version to take any keyboard input until counter runs out
-		//     the game halts until the counter runs out for the power pellet
         
         int[] position = mover.getPosition();
         boolean munched = false;
@@ -182,11 +181,6 @@ public class Brain {
                 break;
             }
         }
-        
-		// if (player.getPosition()[0] == ghost1.getPosition()[0] && player.getPosition()[1] == ghost1.getPosition()[1]) {
-        //     System.out.println("MUNCH");
-		// 	resetPosition();
-        // }
         
 		if (! munched) {
 			String[][] newArr = gameWorld.copyArr(gameWorld.getMovingArr());
@@ -283,15 +277,6 @@ public class Brain {
             }
         }
         
-		// if (intersect && player.getLives() > 0 && !intersectedGhost.getPowerStatus()) {
-		// 	player.loseLife();
-		// 	// resetPosition(intersectedGhost);
-		// 	System.out.println("You lost a life!");
-        // }
-        // resetPosition(intersectedGhost);
-		// else if(intersect && ghost1.getPowerStatus()){
-		// 	resetPosition(intersectedGhost);
-		// }
 	}
 	
 	/**
@@ -336,17 +321,20 @@ public class Brain {
 		
         String[][] newMoveArr = gameWorld.copyArr(gameWorld.getMovingArr());
         Entity eaten;
+        int[] spawnPosition;
 
         // make sure to check all ghosts
 		
 		if (!ghost.getPowerStatus()){
 
             eaten = player;
+            spawnPosition = new int[] {0,0};
 
 		}
 		else {
             eaten = ghost;
             ghost.setPowerStatus(false);
+            spawnPosition = new int[] {2,4};
 			
         }
         
@@ -354,7 +342,7 @@ public class Brain {
         
         newMoveArr[eatenPosition[0]][eatenPosition[1]] = eaten.getEnemyCharacter();
         
-        eaten.setPosition(new int[] {2,4});
+        eaten.setPosition(spawnPosition);
 
 		newMoveArr[2][4] = eaten.getCharacter();
 
