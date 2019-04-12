@@ -69,7 +69,7 @@ public class Gui extends Application {
             gameGridPane.add(picPacman,pacmanPos[1], pacmanPos[0]);
 
             if(keyPressed =="a"){
-                picPacman.setRotate(180.00);a
+                picPacman.setRotate(180.00);
             }
             else if(keyPressed == "s"){
                 picPacman.setRotate(90.00);
