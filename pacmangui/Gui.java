@@ -14,12 +14,17 @@ import javafx.scene.text.Font;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.shape.*;
+
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
+
 import javafx.animation.AnimationTimer;
 import javafx.scene.image.*;
 import javafx.scene.*;
 import javafx.scene.layout.*;
 import pacmanlogic.*;
-
+import java.io.File;
 
 
 /**
@@ -28,6 +33,8 @@ import pacmanlogic.*;
 public class Gui extends Application {
     Brain gameBrain = new Brain();
         
+
+    int count = 0;
     BorderPane root = new BorderPane();
     Image image = new Image("Resources/Ghost.gif");
 
@@ -62,7 +69,7 @@ public class Gui extends Application {
             gameGridPane.add(picPacman,pacmanPos[1], pacmanPos[0]);
 
             if(keyPressed =="a"){
-                picPacman.setRotate(180.00);
+                picPacman.setRotate(180.00);a
             }
             else if(keyPressed == "s"){
                 picPacman.setRotate(90.00);
@@ -143,27 +150,40 @@ public class Gui extends Application {
                 System.exit(0);
             }
 
-            if(gameBrain.checkGameOver()) {
-                root.getChildren().remove(gameGridPane);
-                root.setCenter(youLost);
-                youLost.setFont(Font.font("Verdana" , 50));
-                youLost.setTextFill(Color.RED);
-                
-                }
+            
             
         });
         long lastUpdate = System.nanoTime();
         
-        new AnimationTimer() {
+        new AnimationTimer()  {
             long lastUpdate = System.nanoTime();
             @Override
             public void handle(long now) {
                 displayBoard(); 
+                
                 // System.out.println("in animation timer;");
                 //from stackoverflow https://stackoverflow.com/questions/30146560/how-to-change-animationtimer-speed
+                if(gameBrain.checkGameOver() && count < 1) {
+                    count ++;
+                    root.getChildren().remove(gameGridPane);
+                    root.setCenter(youLost);
+                    youLost.setFont(Font.font("Verdana" , 50));
+                    youLost.setTextFill(Color.RED);
+                    File file = new File("scores.txt");
+                    try {PrintWriter printer = new PrintWriter(new FileOutputStream(file, true));
+                    printer.println("player score: " + player.getScore());
+                    printer.close();
+                    
+                    
+                        
+                    } catch (FileNotFoundException e) {
+                        //TODO: handle exception
+                        System.out.println(e);
+                    } 
+                    
+                    }
                 
-                
-                    if (now - lastUpdate >= 500000000l ) {
+                    if (now - lastUpdate >= 500000000l && gameBrain.checkGameOver() == false ) {
 
                         gameBrain.validateMove(player, player.move(keyPressed));
 
