@@ -342,9 +342,14 @@ public class Brain {
         
         newMoveArr[eatenPosition[0]][eatenPosition[1]] = eaten.getEnemyCharacter();
         
-        eaten.setPosition(spawnPosition);
-
-		newMoveArr[2][4] = eaten.getCharacter();
+        if(eaten.getCharacter().equals("P")){
+            eaten.setPosition(new int[] {0,0});
+            newMoveArr[0][0] = eaten.getCharacter();
+        }
+        else{
+            eaten.setPosition(new int[] {2,4});
+		    newMoveArr[2][4] = eaten.getCharacter();
+        }
 
         gameWorld.setMovingArr(newMoveArr);
 	}
