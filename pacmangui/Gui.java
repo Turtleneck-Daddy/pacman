@@ -1,4 +1,3 @@
-package pacmangui;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
@@ -29,17 +28,11 @@ public class Gui extends Application {
     Brain gameBrain = new Brain();
         
     BorderPane root = new BorderPane();
-    Image image = new Image("Resources\\Ghost.gif");
-    // ImageView picGhost = new ImageView(image);
-    // ImageView pic2 = new ImageView(image);
-    // ImageView pic3 = new ImageView(image);
-    // ImageView pic4 = new ImageView(image);
+    Image image = new Image("File:Ghost.gif");
+
     GridPane gameGridPane = new GridPane();
-    // HBox var1 = new HBox(picGhost);
-    // HBox var2 = new HBox(pic2);
-    // HBox var3 = new HBox(pic3);
-    // HBox var4 = new HBox(pic4);
-    Image image1 = new Image("Resources\\Gif.gif");
+
+    Image image1 = new Image("File:Gif.gif");
     ImageView picPacman = new ImageView(image1);
    
     HBox varPacman = new HBox(picPacman);
@@ -48,14 +41,7 @@ public class Gui extends Application {
     
     //creating the visual board
     public void displayBoard() {
-        // picGhost.setFitHeight(40);
-        // picGhost.setFitWidth(40);
-        // pic2.setFitHeight(40);
-        // pic2.setFitWidth(40);
-        // pic3.setFitHeight(40);
-        // pic3.setFitWidth(40);
-        // pic4.setFitHeight(40);
-        // pic4.setFitWidth(40);
+
         picPacman.setFitHeight(25);
         picPacman.setFitWidth(25);
         
@@ -121,10 +107,7 @@ public class Gui extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-		//setting the texts
-        //gameGridPane.setStyle("-fx-background-color: #C0C0C0;");
         Pacman player = gameBrain.getPlayer();
-        Ghost ghost1 = gameBrain.getGhost();
 
         gameGridPane.setGridLinesVisible(true);
         Label youLost = new Label(" You Lost!!");
@@ -141,7 +124,7 @@ public class Gui extends Application {
 		//Event handler
         gameScreen.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
 			if(key.getCode() == javafx.scene.input.KeyCode.A ) {
-                // var.setCenterX(var.getCenterX() + 10);
+  
                 keyPressed = "a";
             }
             else if (key.getCode() == javafx.scene.input.KeyCode.W) {
@@ -187,6 +170,7 @@ public class Gui extends Application {
                         
                         gameBrain.checkCoins();
                         
+                        int number = 1;
                         for (Ghost ghost : gameBrain.getGhostArray()) {
                             gameBrain.validateMove(ghost, ghost.move("s")); 
                             
@@ -196,24 +180,19 @@ public class Gui extends Application {
                             }
                             else{
                                 gameBrain.deactivatePowerUp(ghost);
-                                gameBrain.getGhost().resetCounter();
+                                gameBrain.getGhost(number).resetCounter();
                             }
+                            number++;
                         }
 
-
                         gameBrain.checkLives();
-                        //System.out.println(keyPressed);
+
                         lastUpdate = now;
                         if(gameBrain.checkWin()== true) {
                             root.getChildren().remove(gameGridPane);
                             root.setCenter(new Label("YOU WON"));
-                            //youLost.setTextFill(color.RED);
                         }
-                }
-                
-                
-              
-                
+                } 
                 
             }
         }.start();
@@ -221,10 +200,8 @@ public class Gui extends Application {
         if(gameBrain.checkWin()== true) {
             root.getChildren().remove(gameGridPane);
             root.setCenter(youLost);
-            //youLost.setTextFill(color.RED);
         }
-       
-            
+        
         System.out.println(player.getScore());
         scoreLabel.setText("Score: " + player.getScore()+ "Lives: "+ player.getLives());
         primaryStage.setTitle("PACMAN Beta");
