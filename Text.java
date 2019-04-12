@@ -10,7 +10,7 @@ public class Text {
         Pacman player = gameBrain.getPlayer();
         Ghost ghost1 = gameBrain.getGhost();
 
-        while (!gameBrain.checkGameOver() || !gameBrain.checkWin()){
+        while (!gameBrain.checkGameOver() && !gameBrain.checkWin()){
             gameBrain.displayBoard();
             gameBrain.validateMove(player, player.move(keyboard.nextLine()));
 
