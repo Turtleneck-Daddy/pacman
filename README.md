@@ -16,7 +16,7 @@ Once power pellet is consumed the ghost can be eaten by the user.
 The game ends once the user eats all the coins.
 
 ## Installation
-Download the java packages in the same folder:
+Download the following java packages in the same folder:
   pacmanlogic
   pacmangui
   pacmantext
