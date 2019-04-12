@@ -56,31 +56,39 @@ public class Gui extends Application {
             scoreLabel.setText("Score: " + gameBrain.getPlayer().getScore()+ "Lives: "+ gameBrain.getPlayer().getLives());
         
             gameGridPane.getChildren().clear();
+
+            int[] pacmanPos = gameBrain.getPlayer().getPosition();
+
+            gameGridPane.add(pic1,pacmanPos[1], pacmanPos[0]);
+
+            if(keyPressed =="a"){
+                pic1.setRotate(180.00);
+            }
+            else if(keyPressed == "s"){
+                pic1.setRotate(90.00);
+            }
+            else if(keyPressed == "w"){
+                pic1.setRotate(270.00);
+            }
+            else if(keyPressed == "d"){
+                pic1.setRotate(0.00);
+            }
+
+            for (Ghost ghost : gameBrain.getGhostArray()) {
+                int[] pos = ghost.getPosition();
+                if (! ghost.getPowerStatus()) {
+                    gameGridPane.add(pic,pos[1],pos[0]);
+                } else {
+                    gameGridPane.add(new Rectangle(5, 10,Color.BLACK),pos[1],pos[0]);
+                }
+            }
+
+
+
             for (int i = 0; i < gameBrain.getDisplayArr().length; i++) {
                 for (int j = 0; j < gameBrain.getDisplayArr()[0].length; j++) {
-                    if(gameBrain.getDisplayArr()[i][j] == "P"){
-                        gameGridPane.add(pic1,j,i);
-                        if(keyPressed =="a"){
-                            pic1.setRotate(180.00);
-                        }
-                        else if(keyPressed == "s"){
-                            pic1.setRotate(90.00);
-                        }
 
-                        else if(keyPressed == "w"){
-                            pic1.setRotate(270.00);
-                        }
-
-                        else if(keyPressed == "d"){
-                            pic1.setRotate(0.00);
-                        }
-                        
-                    }
-                    else if(gameBrain.getDisplayArr()[i][j] == "G"){
-                        gameGridPane.add(pic,j,i);
-                    }
-
-                    else if(gameBrain.getDisplayArr()[i][j] == "C"){
+                    if(gameBrain.getDisplayArr()[i][j] == "C"){
                         gameGridPane.add(new Circle(10, Color.YELLOW),j,i);
                     }
                     else if(gameBrain.getDisplayArr()[i][j] == "W"){
@@ -88,9 +96,6 @@ public class Gui extends Application {
                     }
                     else if(gameBrain.getDisplayArr()[i][j] == "O"){
                         gameGridPane.add(new Circle (10,Color.BLUE),j,i);
-                    }
-                    else if(gameBrain.getDisplayArr()[i][j] == "g"){
-                        gameGridPane.add(new Rectangle(5, 10,Color.BLACK),j,i);
                     }
                     
                 }
@@ -158,27 +163,29 @@ public class Gui extends Application {
                 
                 
                     if (now - lastUpdate >= 500000000l ) {
-                    
-                    gameBrain.validateMove(player.getPosition(), player.move(keyPressed));
-                    gameBrain.checkLives();
-                    gameBrain.validateMove(ghost1.getPosition(), ghost1.move("s")); 
-                    gameBrain.checkCoins();
 
-                    if(ghost1.getPowerStatus() && ghost1.getCounter() > 0){
-                        ghost1.decreaseCounter();
-                    }
-                    else{
-                        gameBrain.deactivatePowerUp();
-                        gameBrain.getGhost().resetCounter();
-                    }
-                    gameBrain.checkLives();
-                    //System.out.println(keyPressed);
-                    lastUpdate = now;
-                    if(gameBrain.checkWin()== true) {
-                        root.getChildren().remove(gameGridPane);
-                        root.setCenter(new Label("YOU WON"));
-                        //youLost.setTextFill(color.RED);
-                    }
+                        gameBrain.validateMove(player, player.move(keyPressed));
+
+                        gameBrain.checkLives();
+                        gameBrain.validateMove(ghost1, ghost1.move("s")); 
+
+                        gameBrain.checkCoins();
+
+                        if(ghost1.getPowerStatus() && ghost1.getCounter() > 0){
+                            ghost1.decreaseCounter();
+                        }
+                        else{
+                            gameBrain.deactivatePowerUp();
+                            gameBrain.getGhost().resetCounter();
+                        }
+                        gameBrain.checkLives();
+                        //System.out.println(keyPressed);
+                        lastUpdate = now;
+                        if(gameBrain.checkWin()== true) {
+                            root.getChildren().remove(gameGridPane);
+                            root.setCenter(new Label("YOU WON"));
+                            //youLost.setTextFill(color.RED);
+                        }
                 }
                 
                 
