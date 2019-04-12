@@ -31,7 +31,6 @@ Download the pacmanlogic package in the Testing folder
 Command to compile- javac -cp .;junit-4.12.jar;hamcrest-core-1.3.jar *.java
 Command to run the test- java -cp .;junit-4.12.jar;hamcrest-core-1.3.jar org.junit.runner.JUnitCore <test class>
 
-
 ## Authors
 Nikita Tripathi 
 Brendan Baker
