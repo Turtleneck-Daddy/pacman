@@ -1,12 +1,10 @@
 package pacmanlogic;
 
-import java.util.Random;
 /**
  * ghost
  */
 public class Ghost extends Entity{
 
-    private static final Random RANDOM = new Random();
     private boolean powerStatus = false; 
     private int powerPelletCount = 20;
     private int[] position;
@@ -17,6 +15,17 @@ public class Ghost extends Entity{
     public Ghost(int[] initialPosition, double[][] array){
         setPosition(initialPosition);
         setDiffusedArray(array);
+    }
+
+    @Override
+    public String getCharacter() {
+        if (powerStatus) return "g";
+        else return "G";
+    }
+
+    @Override
+    public String getEnemyCharacter() {
+        return "P";
     }
 
     public int[] move(String input) {
@@ -34,9 +43,17 @@ public class Ghost extends Entity{
         // double[] values = {0, 0, 0, 0};
         for (int i = 0; i < toCheck.length; i++) {
             if (toCheck[i][0] >= 0 && toCheck[i][0] <= array.length-1 && toCheck[i][1] >= 0 && toCheck[i][1] <= array[0].length-1) {
-                if (array[toCheck[i][0]][toCheck[i][1]] >= bestVal) {
-                    bestVal = array[toCheck[i][0]][toCheck[i][1]];
-                    decision = i;
+                if (!powerStatus) {
+                    if (array[toCheck[i][0]][toCheck[i][1]] >= bestVal) {
+                        bestVal = array[toCheck[i][0]][toCheck[i][1]];
+                        decision = i;
+                    }
+                } else {
+                    bestVal = 1;
+                    if (array[toCheck[i][0]][toCheck[i][1]] <= bestVal && array[toCheck[i][0]][toCheck[i][1]] >= 0 ) {
+                        bestVal = array[toCheck[i][0]][toCheck[i][1]];
+                        decision = i;
+                    }
                 }
             }
         }

@@ -46,6 +46,7 @@ public class Brain {
     private final int[] initialGhostPosition = {2, 4}; 
     private Pacman player = new Pacman(initialPlayerPosition);
     private Ghost ghost1 = new Ghost(initialGhostPosition, diffusedArray);
+    private Ghost[] ghostArray = {ghost1};
     private World gameWorld = new World(initialArray, player.getPosition(), ghost1.getPosition());
 
     public void updateDiffArr() {
@@ -105,39 +106,41 @@ public class Brain {
                 }
             }
         }
-
-        // for (double[] row : diffusedArray) {
-        //     for (double item : row) {
-        //         if (item == 0.0) diffuse();
-        //     }
-        // }
     }
     
     //Getters and setters
-   public int getWidth(){
-       return width;
-   }
+    public int getWidth(){
+        return width;
+    }
 
-   public int getHeight(){
-       return height;
-   }
+    public int getHeight(){
+        return height;
+    }
 
-   public Pacman getPlayer(){
-       return player;
-   }
+    public Pacman getPlayer(){
+        return player;
+    }
 
-   public Ghost getGhost(){
-       return ghost1;
-   }
+    public Ghost getGhost(){
+        return ghost1;
+    }
 
-   public World getGameWorld(){
-       return gameWorld;
-   }
+    public World getGameWorld(){
+        return gameWorld;
+    }
+
+    /**
+     * @return the ghostArray
+     */
+    public Ghost[] getGhostArray() {
+        return ghostArray;
+    }
 
    /**
    	checks for valid moves of movable objects, moving them accordingly
    */
-    public void validateMove(int[] position, int[] move) {
+    public void validateMove(Entity mover, int[] move) {
+        int[] position =  mover.getPosition();
         int toCheck = position[move[0]] + move[1];
         int ceiling;
         int w = position[0];
@@ -152,9 +155,9 @@ public class Brain {
 
         if (toCheck < 0 || toCheck >= ceiling || gameWorld.getCoinArr()[w][h] == "W"){
             // do nothing
-            System.out.println("Couldn't move, Did nothing");
+            System.out.println("Couldn't move, Did nothing." + mover.getCharacter() + " Tried to move" + move[0] + " " + move[1]);
         } else {
-            move(position, move);
+            move(mover, move);
             // System.out.println(initialPlayerPosition[0] + " " +  initialPlayerPosition[1]);
             // System.out.println(initialGhostPosition[0] + " " +  initialGhostPosition[1]);
         }
@@ -162,21 +165,30 @@ public class Brain {
     }
 
     // updates position of movable object
-    public void move(int[] position, int[] move) {
+    public void move(Entity mover, int[] move) {
 		//Resets the position if they intersect, depending on the Pacmans status (powered up or not)
 		//Current parameters: Pacman gets sent to top left, ghost gets sent to inside the box
 		//BUG: can not get the GUI version to take any keyboard input until counter runs out
 		//     the game halts until the counter runs out for the power pellet
-		
-		if (player.getPosition() == ghost1.getPosition()) {
-			if(!ghost1.getPowerStatus()){
-				resetPosition();
-			}
-			else if (ghost1.getPowerStatus()){
-				resetPosition();
-			}
-		}
-		else {
+        
+        int[] position = mover.getPosition();
+        boolean munched = false;
+
+        for (Ghost ghost : ghostArray) {
+            if (player.getPosition()[0] == ghost.getPosition()[0] && player.getPosition()[1] == ghost.getPosition()[1]) {
+                munched = true;
+                System.out.println("MUNCH");
+                resetPosition(ghost);
+                break;
+            }
+        }
+        
+		// if (player.getPosition()[0] == ghost1.getPosition()[0] && player.getPosition()[1] == ghost1.getPosition()[1]) {
+        //     System.out.println("MUNCH");
+		// 	resetPosition();
+        // }
+        
+		if (! munched) {
 			String[][] newArr = gameWorld.copyArr(gameWorld.getMovingArr());
             String character = newArr[position[0]][position[1]];
                         
@@ -184,12 +196,10 @@ public class Brain {
             position[move[0]] = position[move[0]] + move[1]; 
             int[] newLocation = position;
 
-            if(character.equals("P")){
-                player.setPosition(newLocation);
-            }
-            else if(character.equals("G")||character.equals("g")){
-                ghost1.setPosition(newLocation);
-            }
+
+            mover.setPosition(newLocation);
+
+            // this next line might be the issue
 			newArr[position[0]][position[1]] = character;
 
 			gameWorld.setMovingArr(newArr);
@@ -197,6 +207,7 @@ public class Brain {
         
         updateDiffArr();
         diffuseFully();
+        System.out.println(ghost1.getPowerStatus() + " " + ghost1.getPosition()[0] + " " + ghost1.getPosition()[1]);
     }
 
     /**
@@ -254,16 +265,33 @@ public class Brain {
 	    Checks lives of player or ghost and resets the position if necessary
 	*/
 	public void checkLives(){
+        boolean intersect = false;
+        Ghost intersectedGhost;
+
+        for (Ghost ghost : ghostArray) {
+            if (player.getPosition()[0] == ghost.getPosition()[0] && player.getPosition()[1] == ghost.getPosition()[1]) {
+                intersect = true;
+                intersectedGhost = ghost;
+
+                if (player.getLives() > 0 && !intersectedGhost.getPowerStatus()) {
+                    player.loseLife();
+                    System.out.println("You lost a life!");
+                }
+                resetPosition(intersectedGhost);
+
+                break;
+            }
+        }
         
-        boolean intersect = (player.getPosition() == ghost1.getPosition());
-		if (intersect && player.getLives() > 0 && !ghost1.getPowerStatus()) {
-			player.loseLife();
-			resetPosition();
-			System.out.println("You lost a life!");
-		}
-		else if(intersect && ghost1.getPowerStatus()){
-			resetPosition();
-		}
+		// if (intersect && player.getLives() > 0 && !intersectedGhost.getPowerStatus()) {
+		// 	player.loseLife();
+		// 	// resetPosition(intersectedGhost);
+		// 	System.out.println("You lost a life!");
+        // }
+        // resetPosition(intersectedGhost);
+		// else if(intersect && ghost1.getPowerStatus()){
+		// 	resetPosition(intersectedGhost);
+		// }
 	}
 	
 	/**
@@ -304,26 +332,31 @@ public class Brain {
 	/**
 		resets pacman to the first block if lives stil remain, and ghost to the inside box if consumed
 	*/
-	public void resetPosition() {
+	public void resetPosition(Ghost ghost) {
 		
         String[][] newMoveArr = gameWorld.copyArr(gameWorld.getMovingArr());
+        Entity eaten;
+
+        // make sure to check all ghosts
 		
-		if (!ghost1.getPowerStatus()){
+		if (!ghost.getPowerStatus()){
 
-			newMoveArr[player.getPosition()[0]][player.getPosition()[1]] = "G";
-           
-            player.setPosition(new int[] {0,0});
+            eaten = player;
 
-			newMoveArr[player.getPosition()[0]][player.getPosition()[1]] = "P";
 		}
-		else if(ghost1.getPowerStatus()){
+		else {
+            eaten = ghost;
+            ghost.setPowerStatus(false);
 			
-			newMoveArr[ghost1.getPosition()[0]][ghost1.getPosition()[1]] = "P";
+        }
         
-            ghost1.setPosition(new int[] {2,4});
+        int[] eatenPosition = eaten.getPosition();
+        
+        newMoveArr[eatenPosition[0]][eatenPosition[1]] = eaten.getEnemyCharacter();
+        
+        eaten.setPosition(new int[] {2,4});
 
-			newMoveArr[ghost1.getPosition()[0]][ghost1.getPosition()[1]] = "g";
-		}
+		newMoveArr[2][4] = eaten.getCharacter();
 
         gameWorld.setMovingArr(newMoveArr);
 	}
@@ -342,7 +375,7 @@ public class Brain {
 		for(int i =0; i< display.length;i++){
             System.out.print("| ");
 				for (int j = 0; j < display[0].length; j++){
-					System.out.print(display[i][j]+" ");
+					System.out.print(display[i][j] + " ");
                 }
             System.out.print("|");
             System.out.println();

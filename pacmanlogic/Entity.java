@@ -6,5 +6,9 @@ public abstract class Entity{
     public abstract void setPosition(int[] position);
 
     public abstract int[] getPosition();
+
+    public abstract String getCharacter();
+
+    public abstract String getEnemyCharacter();    
     
 }

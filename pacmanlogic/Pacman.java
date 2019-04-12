@@ -51,6 +51,16 @@ public class Pacman extends Entity{
 		
 	}
 
+	@Override
+	public String getCharacter() {
+		return "P";
+	}
+
+	@Override
+	public String getEnemyCharacter() {
+		return "G";
+	}
+
 	public void setPosition(int[] position){
 		this.position = position;
 	}
