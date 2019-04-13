@@ -4,10 +4,11 @@ package pacmanlogic;
 import java.util.Random;
 
 /**
- * world
+ * Logic class World. Used in Brain.
  */
 public class World {
 
+    //Instance Variables
     private int width;
     private int height;
     private String[][] movingArr;
@@ -56,15 +57,11 @@ public class World {
         return newArr;
     }
     
+    /**
+     * Places coins on coin array
+     */
     public void placeCoins() {
-        // calculate how many coins we need ( should be 1/3 or 1/2 of width * height)
-
-        // randomly places coins on vacant blocks
-        // while num of coins != coins we need
-        // add a coin to an emty slot randomly, num of coins ++
-        // will be used only once per round 
         int coinsToPlace = 5;
-        // int coinsToPlace = (int) (1/3 * this.height * this.width);
         int coinsPlaced = 0;
 
         while (coinsPlaced < coinsToPlace) {
@@ -81,10 +78,11 @@ public class World {
         }
     }
 
+    /**
+     * put one power pellet on a vacant place (on coin array, not necessarily the moving array too)
+     * will be reused periodically
+     */
     private void placePowerup() {
-        // put one power pellet on a vacant place (on coin array, not necessarily the moving array too)
-
-        // will be reused periodically
         int powerupsPlaced = 0;
         while (powerupsPlaced == 0) {
             int w = RANDOM.nextInt(this.width);
@@ -97,7 +95,9 @@ public class World {
         }
     }
 	
-	//set power pellet array
+	/**
+     * sets up array where ghost is edible
+     */
 	public void setPowerUpArr(){
 		String[][] newGhostArr = copyArr(getMovingArr());
 		
@@ -112,7 +112,9 @@ public class World {
 		setMovingArr(newGhostArr);
 	}
 	
-	//resets array to original after power up has ended
+    /**
+     * resets array back to when Pacman can not eat the ghosts
+     */
 	public void resetFromPowerUpArr(){
 		String[][] newGhostArr = copyArr(getMovingArr());
 		

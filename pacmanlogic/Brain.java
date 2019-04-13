@@ -195,8 +195,10 @@ public class Brain {
     public Ghost[] getGhostArray() {
         return ghostArray;
     }
-
-
+	
+	/**
+	 * updates diffused array
+	 */
     public void updateDiffArr() {
         for (int row = 0; row < diffusedArray.length; row++) {
             for (int col = 0; col < diffusedArray[0].length; col++) {
@@ -209,6 +211,9 @@ public class Brain {
         }
     }
 
+	/**
+	 *changes the values of diffused array in correlation to movable entities
+	 */
     public void diffuse() {
         for (int row = 0; row < diffusedArray.length; row++) {
             for (int col = 0; col < diffusedArray[row].length; col++) {
@@ -237,6 +242,9 @@ public class Brain {
 
     }
 
+	/**
+	 *changes the values of diffused array in correlation to movable entities
+	 */
     public void diffuseFully() {
         for (int row = 0; row < diffusedArray.length; row++) {
             for (int col = 0; col < diffusedArray[0].length; col++) {
