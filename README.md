@@ -32,11 +32,11 @@ Command to compile- javac -cp .;junit-4.12.jar;hamcrest-core-1.3.jar *.java
 Command to run the test- java -cp .;junit-4.12.jar;hamcrest-core-1.3.jar org.junit.runner.JUnitCore <test class>
 
 ## Authors
-Nikita Tripathi 
-Brendan Baker
+Nikita Tripathi, 
+Brendan Baker,
+Soumya Kumaria,
+Vi Tsang,
 Mubarak Adetunji
-Soumya Kumaria
-Vi Tsang
 
 ## Year
 Project started in Feburary, 2019, development ended in April, 2019
