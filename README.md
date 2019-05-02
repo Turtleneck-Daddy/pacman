@@ -39,5 +39,5 @@ Soumya Kumaria
 Vi Tsang
 
 ## Year
-Project started in Feburary, 2019
-Status: Not yet completed
+Project started in Feburary, 2019, development ended in April, 2019
+Status: Completed
