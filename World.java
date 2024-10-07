@@ -3,7 +3,7 @@ import java.util.Random;
 /**
  * world
  */
-public class world {
+public class World {
 
     private int width;
     private int height;
@@ -96,7 +96,7 @@ public class world {
     }
 
 
-    public world(String[][] arr, int[] playerPos, int[] ghostPos) {       
+    public World(String[][] arr, int[] playerPos, int[] ghostPos) {       
         this.width = arr.length;
         this.height = arr[0].length;
         String[][] m = copyArr(arr);
